@@ -1,12 +1,13 @@
-package api.Roamly.Service.Implementation.User;
+package api.Roamly.Service.Implementation.Friendship;
 
 import api.Roamly.DTO.User.UserDTO;
 import api.Roamly.Domain.Friendship;
 import api.Roamly.Domain.User;
 import api.Roamly.Repository.FriendshipRepository;
-import api.Roamly.Repository.UserRepository;
 import api.Roamly.Service.Interface.Auth.IAuthService;
-import api.Roamly.Service.Interface.User.IFriendService;
+import api.Roamly.Service.Interface.Friendship.IFriendService;
+import api.Roamly.Service.Interface.Friendship.IFriendshipValidation;
+import api.Roamly.Service.Interface.User.IUserValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,9 @@ public class FriendService implements IFriendService {
 
     private final FriendshipRepository friendshipRepository;
     private final IAuthService authService;
+    private final IUserValidationService userValidationService;
 
-    private final UserRepository userRepository;
+    private final IFriendshipValidation friendshipValidation;
 
 
     @Override
@@ -36,7 +38,7 @@ public class FriendService implements IFriendService {
 
         User requester = authService.getAuthenticatedUser();
 
-        User receiver = userRepository.getReferenceById(receiverId);
+        User receiver = userValidationService.validateUserExists(receiverId);
 
         Optional<Friendship> existingFriendship = friendshipRepository.findByRequesterAndReceiver(requester.getId(),receiver.getId());
 
@@ -58,7 +60,7 @@ public class FriendService implements IFriendService {
 
     @Override
     public ResponseEntity<UserDTO> acceptRequest(Long requestId) {
-        Friendship friendship = friendshipRepository.getReferenceById(requestId);
+        Friendship friendship = friendshipValidation.validateRequestExist(requestId);
         User user = authService.getAuthenticatedUser();
 
         if (friendship.getReceiver().equals(user)) {

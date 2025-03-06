@@ -1,4 +1,4 @@
-package api.Roamly.Service.Interface.User;
+package api.Roamly.Service.Interface.Friendship;
 
 import api.Roamly.DTO.User.UserDTO;
 import org.springframework.http.ResponseEntity;

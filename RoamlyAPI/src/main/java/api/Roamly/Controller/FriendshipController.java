@@ -2,7 +2,7 @@ package api.Roamly.Controller;
 
 
 import api.Roamly.DTO.User.UserDTO;
-import api.Roamly.Service.Interface.User.IFriendService;
+import api.Roamly.Service.Interface.Friendship.IFriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
