@@ -23,6 +23,11 @@ public class FriendshipController {
         return friendService.requestFriendship(id);
     }
 
+    @PutMapping("/accept/{id}")
+    public ResponseEntity<UserDTO> acceptRequest(@PathVariable Long id){
+        return friendService.acceptRequest(id);
+    }
+
 
 
 }

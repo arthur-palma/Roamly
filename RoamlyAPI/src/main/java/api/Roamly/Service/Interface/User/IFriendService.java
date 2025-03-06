@@ -7,10 +7,12 @@ import java.util.UUID;
 
 public interface IFriendService {
 
-    public ResponseEntity<UserDTO> requestFriendship(UUID requestedId);
+     ResponseEntity<UserDTO> requestFriendship(UUID requestedId);
 
-    public UserDTO addFriend(UUID requestId);
+     ResponseEntity<UserDTO> acceptRequest(Long requestId);
 
-    public void unfriend(UUID id);
+     void declineRequest(UUID requestId);
+
+     void unfriend(UUID id);
 
 }
