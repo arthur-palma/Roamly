@@ -11,7 +11,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
-import static org.aspectj.weaver.tools.cache.SimpleCacheFactory.enabled;
 
 @Getter
 @Setter
@@ -44,9 +43,9 @@ public class User implements UserDetails {
 
     @ManyToMany
     @JoinTable(
-            name = "friends",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "friend_id")
+            name = "friendship",
+            joinColumns = @JoinColumn(name = "requester_id"),
+            inverseJoinColumns = @JoinColumn(name = "receiver_id")
     )
     private List<User> friends = new ArrayList<>();
 
@@ -90,6 +89,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 }
