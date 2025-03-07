@@ -1,7 +1,8 @@
 package api.Roamly.Controller;
 
 
-import api.Roamly.DTO.User.UserDTO;
+import api.Roamly.DTO.Friendship.FriendshipDTO;
+import api.Roamly.Domain.Enum.FriendshipStatus;
 import api.Roamly.Service.Interface.Friendship.IFriendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,13 +20,13 @@ public class FriendshipController {
 
 
     @PostMapping("/{id}")
-    public ResponseEntity<UserDTO> requestFriendship(@PathVariable UUID id){
+    public ResponseEntity<FriendshipDTO> requestFriendship(@PathVariable UUID id){
         return friendService.requestFriendship(id);
     }
 
-    @PutMapping("/accept/{id}")
-    public ResponseEntity<UserDTO> acceptRequest(@PathVariable Long id){
-        return friendService.acceptRequest(id);
+    @PutMapping("/handle-request/{requestId}/{status}")
+    public ResponseEntity<FriendshipDTO> handleRequest(@PathVariable Long requestId, @PathVariable FriendshipStatus status) {
+        return friendService.handleRequest(status, requestId);
     }
 
 
