@@ -10,15 +10,16 @@ import api.Roamly.Service.Interface.Friendship.IFriendService;
 import api.Roamly.Service.Interface.Friendship.IFriendshipValidation;
 import api.Roamly.Service.Interface.User.IUserValidationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static api.Roamly.Domain.Enum.FriendshipStatus.*;
 import static api.Roamly.Mapper.FriendshipMapper.toDTO;
+import static org.springframework.http.HttpStatus.*;
 
 
 @RequiredArgsConstructor
@@ -37,6 +38,10 @@ public class FriendService implements IFriendService {
 
         User requester = authService.getAuthenticatedUser();
 
+        if(requester.getId().equals(receiverId)){
+            throw new ResponseStatusException(BAD_REQUEST,"A request cannot be made to the same user.");
+        }
+
         User receiver = userValidationService.validateUserExists(receiverId);
 
         Optional<Friendship> existingFriendship = friendshipRepository.findByRequesterAndReceiver(requester.getId(),receiver.getId());
@@ -46,7 +51,7 @@ public class FriendService implements IFriendService {
         if (existingFriendship.isPresent()) {
             friendship = existingFriendship.get();
             if(friendship.getStatus() != REJECTED)
-                throw new RuntimeException("There is already a request or friendship between these users.");
+                throw new ResponseStatusException(BAD_REQUEST,"There is already a request or friendship between these users.");
             else {
                 friendship.setStatus(PENDING);
                 friendship.setReceiver(receiver);
@@ -59,7 +64,7 @@ public class FriendService implements IFriendService {
 
         friendshipRepository.save(friendship);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(toDTO(friendship));
+        return ResponseEntity.status(CREATED).body(toDTO(friendship));
     }
 
 
@@ -83,16 +88,16 @@ public class FriendService implements IFriendService {
                     friendship.setStatus(option);
                     friendshipRepository.save(friendship);
                 } else {
-                    throw new IllegalArgumentException("Invalid friendship status provided.");
+                    throw new ResponseStatusException(BAD_REQUEST,"Invalid friendship status provided.");
                 }
             } else {
-                throw new IllegalStateException("This request has already been accepted or rejected.");
+                throw new ResponseStatusException(CONFLICT,"This request has already been accepted or rejected.");
             }
         } else {
-            throw new IllegalStateException("You cannot accept a request that is not addressed to you.");
+            throw new ResponseStatusException(UNAUTHORIZED,"You cannot accept a request that is not addressed to you.");
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(toDTO(friendship));
+        return ResponseEntity.status(OK).body(toDTO(friendship));
     }
 
     @Override

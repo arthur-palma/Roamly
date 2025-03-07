@@ -24,7 +24,7 @@ public class FriendshipController {
         return friendService.requestFriendship(id);
     }
 
-    @PutMapping("/handle-request/{requestId}/{status}")
+    @PutMapping("/handle-request/{status}/{requestId}")
     public ResponseEntity<FriendshipDTO> handleRequest(@PathVariable Long requestId, @PathVariable FriendshipStatus status) {
         return friendService.handleRequest(status, requestId);
     }
