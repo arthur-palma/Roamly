@@ -12,6 +12,6 @@ public interface IFriendService {
 
      ResponseEntity<FriendshipDTO> handleRequest(FriendshipStatus option, Long requestId);
 
-     void unfriend(UUID id);
+     ResponseEntity<Void> unfriend(UUID id);
 
 }

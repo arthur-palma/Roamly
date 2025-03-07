@@ -10,6 +10,7 @@ import api.Roamly.Service.Interface.Friendship.IFriendService;
 import api.Roamly.Service.Interface.Friendship.IFriendshipValidation;
 import api.Roamly.Service.Interface.User.IUserValidationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -101,7 +102,17 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public void unfriend(UUID id) {
+    public ResponseEntity<Void> unfriend(UUID receiverId) {
+        User user = authService.getAuthenticatedUser();
+        Optional<Friendship> friendship = friendshipRepository.findByRequesterAndReceiver(user.getId(), receiverId);
+
+        if(friendship.isPresent()){
+            friendshipRepository.delete(friendship.get());
+            return ResponseEntity.status(OK).build();
+        }
+        else {
+            throw new ResponseStatusException(UNAUTHORIZED,"You cannot unfriend someone that is not your friend");
+        }
 
     }
 }

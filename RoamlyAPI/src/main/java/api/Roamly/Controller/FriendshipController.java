@@ -19,9 +19,9 @@ public class FriendshipController {
     private final IFriendService friendService;
 
 
-    @PostMapping("/{id}")
-    public ResponseEntity<FriendshipDTO> requestFriendship(@PathVariable UUID id){
-        return friendService.requestFriendship(id);
+    @PostMapping("/{friendId}")
+    public ResponseEntity<FriendshipDTO> requestFriendship(@PathVariable UUID friendId){
+        return friendService.requestFriendship(friendId);
     }
 
     @PutMapping("/handle-request/{status}/{requestId}")
@@ -29,6 +29,10 @@ public class FriendshipController {
         return friendService.handleRequest(status, requestId);
     }
 
+    @DeleteMapping("/{friendId}")
+    public ResponseEntity<Void> unfriend(@PathVariable UUID friendId){
+        return friendService.unfriend(friendId);
+    }
 
 
 }
