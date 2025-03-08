@@ -2,14 +2,13 @@ package api.Roamly.Controller;
 
 
 import api.Roamly.DTO.Trip.CreateTripDTO;
+import api.Roamly.DTO.Trip.EditTripDTO;
+import api.Roamly.DTO.Trip.TripDTO;
 import api.Roamly.Service.Interface.Trip.ITripService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/trip")
@@ -20,8 +19,13 @@ public class TripController {
 
 
     @PostMapping
-    public ResponseEntity<Void> createTrip(@RequestBody @Valid CreateTripDTO createTripDTO){
+    public ResponseEntity<TripDTO> createTrip(@RequestBody @Valid CreateTripDTO createTripDTO){
         return tripService.createTrip(createTripDTO);
+    }
+
+    @PutMapping
+    public ResponseEntity<TripDTO> editTrip(@RequestBody @Valid EditTripDTO editTripDTO){
+        return tripService.editTrip(editTripDTO);
     }
 
 

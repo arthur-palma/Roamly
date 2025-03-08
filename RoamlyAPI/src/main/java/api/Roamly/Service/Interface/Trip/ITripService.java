@@ -1,14 +1,16 @@
 package api.Roamly.Service.Interface.Trip;
 
 import api.Roamly.DTO.Trip.CreateTripDTO;
+import api.Roamly.DTO.Trip.EditTripDTO;
+import api.Roamly.DTO.Trip.TripDTO;
 import org.springframework.http.ResponseEntity;
 
 public interface ITripService {
 
 
-    ResponseEntity<Void> createTrip(CreateTripDTO createTripDTO);
+    ResponseEntity<TripDTO> createTrip(CreateTripDTO createTripDTO);
 
-    ResponseEntity<Void> editTrip();
+    ResponseEntity<TripDTO> editTrip(EditTripDTO editTripDTO);
 
     ResponseEntity<Void> removeTrip();
 
