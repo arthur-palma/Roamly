@@ -6,15 +6,20 @@ import api.Roamly.DTO.Trip.EditTripDTO;
 import api.Roamly.DTO.Trip.TripDTO;
 import api.Roamly.Domain.Trip;
 import api.Roamly.Domain.User;
+import api.Roamly.Mapper.TripMapper;
 import api.Roamly.Repository.TripRepository;
 import api.Roamly.Service.Implementation.Auth.AuthService;
 import api.Roamly.Service.Interface.Trip.ITripService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static api.Roamly.Mapper.TripMapper.toDTO;
 import static org.springframework.http.HttpStatus.*;
@@ -79,7 +84,40 @@ public class TripService implements ITripService {
     }
 
     @Override
-    public ResponseEntity<Void> removeTrip() {
-        return null;
+    @Transactional
+    public ResponseEntity<Void> removeTrip(UUID tripId) {
+
+        User user = authService.getAuthenticatedUser();
+
+        Trip trip = tripRepository.findById(tripId)
+                .orElseThrow(() -> new ResponseStatusException(NOT_FOUND, "Trip Not Found"));
+
+        if (!trip.getOwner().getId().equals(user.getId())) {
+            throw new ResponseStatusException(UNAUTHORIZED, "You cannot delete a trip that is not yours");
+        }
+
+        trip.getParticipants().clear();
+        tripRepository.save(trip);
+        tripRepository.delete(trip);
+
+        return ResponseEntity.status(OK).build();
+    }
+
+    @Override
+    public ResponseEntity<List<TripDTO>> getUserTrip() {
+        User user = authService.getAuthenticatedUser();
+
+        List<Trip> trips = tripRepository.findByOwnerOrParticipants(user);
+
+        if (trips.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        List<TripDTO> tripDTOs = trips.stream()
+                .map(TripMapper::toDTO)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(tripDTOs);
+
     }
 }

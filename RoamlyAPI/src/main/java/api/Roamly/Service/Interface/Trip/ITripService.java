@@ -5,6 +5,9 @@ import api.Roamly.DTO.Trip.EditTripDTO;
 import api.Roamly.DTO.Trip.TripDTO;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+import java.util.UUID;
+
 public interface ITripService {
 
 
@@ -12,6 +15,8 @@ public interface ITripService {
 
     ResponseEntity<TripDTO> editTrip(EditTripDTO editTripDTO);
 
-    ResponseEntity<Void> removeTrip();
+    ResponseEntity<Void> removeTrip(UUID id);
+
+    ResponseEntity<List<TripDTO>> getUserTrip();
 
 }
