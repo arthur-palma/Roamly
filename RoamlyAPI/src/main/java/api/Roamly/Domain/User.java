@@ -49,6 +49,12 @@ public class User implements UserDetails {
     )
     private List<User> friends = new ArrayList<>();
 
+    public void addTrip(Trip trip) {
+        if(!trips.contains(trip) && !trip.getParticipants().contains(this)){
+            trips.add(trip);
+            trip.getParticipants().add(this);
+        }
+    }
 
     public void addFriend(User friend) {
         if (!friends.contains(friend) && !friend.getFriends().contains(this)) {
@@ -91,4 +97,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }
