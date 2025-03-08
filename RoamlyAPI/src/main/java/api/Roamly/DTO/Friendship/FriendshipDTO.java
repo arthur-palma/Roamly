@@ -1,7 +1,7 @@
 package api.Roamly.DTO.Friendship;
 
 
-import api.Roamly.Domain.Enum.FriendshipStatus;
+import api.Roamly.Domain.Enum.InvitationStatus;
 import lombok.*;
 
 import java.util.UUID;
@@ -18,5 +18,5 @@ public class FriendshipDTO {
 
     private UUID receiver;
 
-    private FriendshipStatus status;
+    private InvitationStatus status;
 }

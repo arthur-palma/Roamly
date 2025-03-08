@@ -1,7 +1,7 @@
 package api.Roamly.Service.Implementation.Friendship;
 
 import api.Roamly.DTO.Friendship.FriendshipDTO;
-import api.Roamly.Domain.Enum.FriendshipStatus;
+import api.Roamly.Domain.Enum.InvitationStatus;
 import api.Roamly.Domain.Friendship;
 import api.Roamly.Domain.User;
 import api.Roamly.Repository.FriendshipRepository;
@@ -10,7 +10,6 @@ import api.Roamly.Service.Interface.Friendship.IFriendService;
 import api.Roamly.Service.Interface.Friendship.IFriendshipValidation;
 import api.Roamly.Service.Interface.User.IUserValidationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -18,7 +17,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.Optional;
 import java.util.UUID;
 
-import static api.Roamly.Domain.Enum.FriendshipStatus.*;
+import static api.Roamly.Domain.Enum.InvitationStatus.*;
+import static api.Roamly.Domain.Enum.InvitationStatus.ACCEPTED;
 import static api.Roamly.Mapper.FriendshipMapper.toDTO;
 import static org.springframework.http.HttpStatus.*;
 
@@ -79,13 +79,13 @@ public class FriendService implements IFriendService {
 
 
     @Override
-    public ResponseEntity<FriendshipDTO> handleRequest(FriendshipStatus option, Long requestId) {
+    public ResponseEntity<FriendshipDTO> handleRequest(InvitationStatus option, Long requestId) {
         Friendship friendship = friendshipValidation.validateRequestExist(requestId);
         User user = authService.getAuthenticatedUser();
 
         if (friendship.getReceiver().equals(user)) {
-            if (friendship.getStatus() == FriendshipStatus.PENDING) {
-                if (option == FriendshipStatus.ACCEPTED || option == FriendshipStatus.REJECTED) {
+            if (friendship.getStatus() == PENDING) {
+                if (option == ACCEPTED || option == REJECTED) {
                     friendship.setStatus(option);
                     friendshipRepository.save(friendship);
                 } else {

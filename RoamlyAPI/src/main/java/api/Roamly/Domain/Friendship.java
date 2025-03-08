@@ -1,11 +1,9 @@
 package api.Roamly.Domain;
 
 
-import api.Roamly.Domain.Enum.FriendshipStatus;
+import api.Roamly.Domain.Enum.InvitationStatus;
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
@@ -29,6 +27,6 @@ public class Friendship {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private FriendshipStatus status;
+    private InvitationStatus status;
 
 }
