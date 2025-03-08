@@ -37,7 +37,12 @@ public class Trip {
     @JoinColumn(name = "owner_id", nullable = false)
     private User owner;
 
-    @ManyToMany(mappedBy = "trips")
+    @ManyToMany
+    @JoinTable(
+            name = "user_trip",
+            joinColumns = @JoinColumn(name = "trip_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
     private List<User> participants = new ArrayList<>();
 
     @OneToMany(mappedBy = "trip", cascade = CascadeType.ALL, orphanRemoval = true)

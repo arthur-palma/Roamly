@@ -33,12 +33,7 @@ public class User implements UserDetails {
 
     private String profilePicture;
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_trip",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "trip_id")
-    )
+    @ManyToMany(mappedBy = "participants", cascade = CascadeType.ALL)
     private List<Trip> trips = new ArrayList<>();
 
     @ManyToMany
