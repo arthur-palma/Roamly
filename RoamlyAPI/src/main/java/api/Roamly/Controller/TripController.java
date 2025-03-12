@@ -1,8 +1,7 @@
 package api.Roamly.Controller;
 
-import api.Roamly.DTO.Trip.CreateTripDTO;
-import api.Roamly.DTO.Trip.EditTripDTO;
-import api.Roamly.DTO.Trip.TripDTO;
+import api.Roamly.DTO.Trip.*;
+import api.Roamly.Service.Interface.Trip.ITripParticipantService;
 import api.Roamly.Service.Interface.Trip.ITripService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,8 @@ import java.util.UUID;
 public class TripController {
 
     private final ITripService tripService;
+
+    private final ITripParticipantService tripParticipantService;
 
     @PostMapping
     public ResponseEntity<TripDTO> createTrip(@RequestBody @Valid CreateTripDTO createTripDTO){
@@ -37,6 +38,11 @@ public class TripController {
     @DeleteMapping("{tripId}")
     public ResponseEntity<Void> removeTrip(@PathVariable UUID tripId){
         return tripService.removeTrip(tripId);
+    }
+
+    @PostMapping("/invite")
+    public ResponseEntity<TripInviteDTO> createTrip(@RequestBody CreateTripInviteDTO createTripInviteDTO){
+        return tripParticipantService.inviteParticipants(createTripInviteDTO);
     }
 
 }
