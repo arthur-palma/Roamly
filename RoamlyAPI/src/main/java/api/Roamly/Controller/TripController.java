@@ -45,4 +45,18 @@ public class TripController {
         return tripParticipantService.inviteParticipants(createTripInviteDTO);
     }
 
+    @GetMapping("/invite")
+    public ResponseEntity<List<TripInviteDTO>> getUserTripInvites(){
+        return tripParticipantService.getUserInvites();
+    }
+
+    @PutMapping("/invite")
+    public ResponseEntity<TripInviteDTO> handleTripInvite(@RequestBody HandleTripInviteDTO handleTripInviteDTO){
+        return tripParticipantService.handleTripInvite(handleTripInviteDTO);
+    }
+
+    @DeleteMapping("/invite")
+    public ResponseEntity<Void> removeParticipant(@RequestBody CreateTripInviteDTO createTripInviteDTO){
+        return tripParticipantService.removeParticipant(createTripInviteDTO);
+    }
 }

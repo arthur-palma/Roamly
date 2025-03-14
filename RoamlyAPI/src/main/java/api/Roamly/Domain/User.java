@@ -99,4 +99,11 @@ public class User implements UserDetails {
             friend.getFriends().remove(this);
         }
     }
+
+    public void leaveTrip(Trip trip) {
+        if (trips.contains(trip) && trip.getParticipants().contains(this)) {
+            trips.remove(trip);
+            trip.getParticipants().remove(this);
+        }
+    }
 }
