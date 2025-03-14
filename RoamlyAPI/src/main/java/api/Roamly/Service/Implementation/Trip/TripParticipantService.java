@@ -47,6 +47,10 @@ public class TripParticipantService implements ITripParticipantService {
             throw new ResponseStatusException(UNAUTHORIZED,"You cannot invite friends to a trip that is not yours");
         }
 
+        if(!user.getFriends().contains(friend)){
+            throw new ResponseStatusException(UNAUTHORIZED,"You cannot invite someone that is not your friend");
+        }
+
         Optional<TripInvite> optionalTripInvite = tripInviteRepository.findByTripIdAndInvitedUserId(createTripInviteDTO.getTripId(), createTripInviteDTO.getFriendId());
 
         if(optionalTripInvite.isPresent()){
