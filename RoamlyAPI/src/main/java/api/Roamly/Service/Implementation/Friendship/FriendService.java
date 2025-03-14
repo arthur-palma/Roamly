@@ -82,14 +82,21 @@ public class FriendService implements IFriendService {
     public ResponseEntity<FriendshipDTO> handleRequest(InvitationStatus option, Long requestId) {
         Friendship friendship = friendshipValidation.validateRequestExist(requestId);
         User user = authService.getAuthenticatedUser();
+        User friend = userValidationService.validateUserExists(friendship.getRequester().getId());
 
         if (friendship.getReceiver().equals(user)) {
             if (friendship.getStatus() == PENDING) {
-                if (option == ACCEPTED || option == REJECTED) {
-                    friendship.setStatus(option);
-                    friendshipRepository.save(friendship);
-                } else {
-                    throw new ResponseStatusException(BAD_REQUEST,"Invalid friendship status provided.");
+                switch (option) {
+                    case ACCEPTED -> {
+                        user.addFriend(friend);
+                        friendship.setStatus(option);
+                        friendshipRepository.save(friendship);
+                    }
+                    case REJECTED -> {
+                        friendship.setStatus(option);
+                        friendshipRepository.save(friendship);
+                    }
+                    default -> throw new ResponseStatusException(BAD_REQUEST, "Invalid friendship status provided.");
                 }
             } else {
                 throw new ResponseStatusException(CONFLICT,"This request has already been accepted or rejected.");
@@ -102,11 +109,13 @@ public class FriendService implements IFriendService {
     }
 
     @Override
-    public ResponseEntity<Void> unfriend(UUID receiverId) {
+    public ResponseEntity<Void> unfriend(UUID friendId) {
         User user = authService.getAuthenticatedUser();
-        Optional<Friendship> friendship = friendshipRepository.findByRequesterAndReceiver(user.getId(), receiverId);
+        User friend = userValidationService.validateUserExists(friendId);
+        Optional<Friendship> friendship = friendshipRepository.findByRequesterAndReceiver(user.getId(), friendId);
 
         if(friendship.isPresent()){
+            user.unfriend(friend);
             friendshipRepository.delete(friendship.get());
             return ResponseEntity.status(OK).build();
         }

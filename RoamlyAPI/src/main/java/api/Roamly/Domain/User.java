@@ -93,4 +93,10 @@ public class User implements UserDetails {
         return true;
     }
 
+    public void unfriend(User friend) {
+        if (friends.contains(friend) && friend.getFriends().contains(this)) {
+            friends.remove(friend);
+            friend.getFriends().remove(this);
+        }
+    }
 }
