@@ -18,45 +18,24 @@ public class TripController {
 
     private final ITripService tripService;
 
-    private final ITripParticipantService tripParticipantService;
-
     @PostMapping
-    public ResponseEntity<TripDTO> createTrip(@RequestBody @Valid CreateTripDTO createTripDTO){
+    public ResponseEntity<TripDTO> createTrip(@RequestBody @Valid CreateTripDTO createTripDTO) {
         return tripService.createTrip(createTripDTO);
     }
 
     @GetMapping
-    public ResponseEntity<List<TripDTO>> getUsersTrip(){
+    public ResponseEntity<List<TripDTO>> getUsersTrip() {
         return tripService.getUserTrip();
     }
 
     @PutMapping
-    public ResponseEntity<TripDTO> editTrip(@RequestBody @Valid EditTripDTO editTripDTO){
+    public ResponseEntity<TripDTO> editTrip(@RequestBody @Valid EditTripDTO editTripDTO) {
         return tripService.editTrip(editTripDTO);
     }
 
     @DeleteMapping("{tripId}")
-    public ResponseEntity<Void> removeTrip(@PathVariable UUID tripId){
+    public ResponseEntity<Void> removeTrip(@PathVariable UUID tripId) {
         return tripService.removeTrip(tripId);
     }
-
-    @PostMapping("/invite")
-    public ResponseEntity<TripInviteDTO> createTrip(@RequestBody CreateTripInviteDTO createTripInviteDTO){
-        return tripParticipantService.inviteParticipants(createTripInviteDTO);
-    }
-
-    @GetMapping("/invite")
-    public ResponseEntity<List<TripInviteDTO>> getUserTripInvites(){
-        return tripParticipantService.getUserInvites();
-    }
-
-    @PutMapping("/invite")
-    public ResponseEntity<TripInviteDTO> handleTripInvite(@RequestBody HandleTripInviteDTO handleTripInviteDTO){
-        return tripParticipantService.handleTripInvite(handleTripInviteDTO);
-    }
-
-    @DeleteMapping("/invite")
-    public ResponseEntity<Void> removeParticipant(@RequestBody CreateTripInviteDTO createTripInviteDTO){
-        return tripParticipantService.removeParticipant(createTripInviteDTO);
-    }
 }
+
