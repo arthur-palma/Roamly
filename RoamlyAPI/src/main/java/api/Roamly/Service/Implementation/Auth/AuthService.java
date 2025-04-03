@@ -10,6 +10,7 @@ import api.Roamly.Service.Interface.Security.IPasswordEncryptionService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
@@ -45,7 +46,9 @@ public class AuthService implements IAuthService {
         jwtCookie.setPath("/");
         response.addCookie(jwtCookie);
 
-        return ResponseEntity.ok(toDTO(user));
+        return ResponseEntity.ok()
+                .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+                .body(toDTO(user));
     }
 
     public String getAuthenticatedUsername() {
