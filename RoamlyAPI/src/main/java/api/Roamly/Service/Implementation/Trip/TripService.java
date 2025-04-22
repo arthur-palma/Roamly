@@ -4,9 +4,11 @@ package api.Roamly.Service.Implementation.Trip;
 import api.Roamly.DTO.Trip.CreateTripDTO;
 import api.Roamly.DTO.Trip.EditTripDTO;
 import api.Roamly.DTO.Trip.TripDTO;
+import api.Roamly.DTO.Trip.TripTrendingDTO;
 import api.Roamly.Domain.Trip;
 import api.Roamly.Domain.User;
 import api.Roamly.Mapper.TripMapper;
+import api.Roamly.Mapper.TripTrendingMapper;
 import api.Roamly.Repository.TripRepository;
 import api.Roamly.Service.Implementation.Auth.AuthService;
 import api.Roamly.Service.Interface.Trip.ITripService;
@@ -119,5 +121,14 @@ public class TripService implements ITripService {
 
         return ResponseEntity.ok(tripDTOs);
 
+    }
+
+    @Override
+    public ResponseEntity<List<TripTrendingDTO>> getTrendingTrips() {
+            List<Trip> randomTrips = tripRepository.findRandomTrips();
+            List<TripTrendingDTO> response = randomTrips.stream()
+                    .map(TripTrendingMapper::toDTO)
+                    .toList();
+            return ResponseEntity.ok(response);
     }
 }

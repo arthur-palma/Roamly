@@ -28,6 +28,11 @@ public class TripController {
         return tripService.getUserTrip();
     }
 
+    @GetMapping("/trending")
+    public ResponseEntity<List<TripTrendingDTO>> getTrendingTrips(){
+        return tripService.getTrendingTrips();
+    }
+
     @PutMapping
     public ResponseEntity<TripDTO> editTrip(@RequestBody @Valid EditTripDTO editTripDTO) {
         return tripService.editTrip(editTripDTO);
