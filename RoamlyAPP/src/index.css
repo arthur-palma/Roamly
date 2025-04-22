@@ -24,11 +24,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
   min-height: 100vh;
-  justify-content: center;
 }
 
 h1 {
@@ -47,12 +43,27 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
-button:hover {
-  border-color: #646cff;
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+.container {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.container > * {
+  box-sizing: border-box;
+  padding: 3em 5em;
+}
+
+@media screen and (max-width: 800px) {
+  .container > * {
+    padding: 1em 2em;
+  }
 }
 
 @media (prefers-color-scheme: light) {

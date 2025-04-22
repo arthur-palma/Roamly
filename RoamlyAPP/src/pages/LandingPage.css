@@ -1,0 +1,35 @@
+.landingpage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100vw;
+  background-color: #f0f0f0;
+  box-sizing: border-box;
+  color: black;
+  gap: 1em;
+}
+
+.landingpage button {
+  background-color: #409d9b;
+  font-weight: normal;
+  box-sizing: border-box;
+  padding: 0.75em 1.5em;
+}
+
+.destination-cards {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@media screen and (max-width: 1250px) {
+  .destination-cards {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+}

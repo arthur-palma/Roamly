@@ -1,0 +1,57 @@
+.destination-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin: 1em;
+  transition: transform 0.2s ease;
+  max-width: 400px;
+}
+
+.destination-card:hover {
+  transform: translateY(-5px);
+}
+
+.image-container {
+  width: 100%;
+  height: 420px;
+  position: relative;
+  overflow: hidden;
+}
+
+.destination-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.price-label {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  background-color: rgba(255, 255, 255, 0.288);
+  padding: 0.4em 0.8em;
+  border-radius: 8px;
+  font-weight: bold;
+  color: #333;
+  font-size: 0.9em;
+}
+
+.destination-info {
+  box-sizing: border-box;
+  padding: 1em;
+  width: 100%;
+}
+
+.destination-name {
+  margin: 0;
+  font-weight: 600;
+}
+
+.destination-days {
+  margin: 0.3em 0 0;
+}

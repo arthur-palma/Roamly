@@ -1,7 +1,8 @@
-import "./style.css";
+import axios from "axios";
 import LoginBanner from "../components/LoginBanner.jsx";
 import { useEffect, useState } from "react";
 import DestinationCard from "../components/DestinationCard";
+import "./LandingPage.css";
 export default function LandingPage() {
   const [destinations, setDestinations] = useState([]);
   useEffect(() => {
@@ -9,12 +10,11 @@ export default function LandingPage() {
       try {
         const response = await axios.get(
           "http://localhost:8080/trip/trending",
-          userData,
           {
             withCredentials: true,
           }
         );
-        const data = await response.json();
+        const data = await response.data;
         setDestinations(data);
       } catch (error) {
         console.error("Error fetching destinations:", error);
@@ -24,7 +24,7 @@ export default function LandingPage() {
     fetchDestinations();
   }, []);
   return (
-    <>
+    <div className="container">
       <LoginBanner />
       <div className="landingpage">
         <h1>Popular Destinations</h1>
@@ -34,14 +34,14 @@ export default function LandingPage() {
           {destinations.map((destination) => (
             <DestinationCard
               key={destination.id}
-              name={destination.name}
-              image={destination.image}
+              name={destination.destination}
+              image={destination.image_url}
               days={destination.days}
-              price={destination.price}
+              price={destination.budget}
             />
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 }
