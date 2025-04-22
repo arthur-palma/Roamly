@@ -21,35 +21,12 @@ export default function Home() {
         },
         withCredentials: true,
       });
-      console.log(response);
     } catch (error) {
       const statusCode =
         error.response?.status || error.request?.status || null;
-      console.log(error);
       unauthorizedUser(statusCode);
-      console.error(error.response?.data?.message || error.message);
     }
   }
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await axios.get("http://localhost:8080/users", {
-        withCredentials: true,
-      });
-      console.log(response);
-    } catch (error) {
-      const statusCode =
-        error.response?.status || error.request?.status || null;
-      console.log(error);
-      unauthorizedUser(statusCode);
-      console.error(
-        "Erro no login:",
-        error.response?.data?.message || error.message
-      );
-    }
-  };
 
   return (
     <div>

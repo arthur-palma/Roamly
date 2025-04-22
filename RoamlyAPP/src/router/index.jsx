@@ -3,9 +3,11 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import NotFound from "../pages/NotFound";
 import ProtectedRoute from "./ProtectedRoute";
+import LandingPage from "../pages/LandingPage";
 
 const Router = createBrowserRouter([
-  { path: "/", element: <Login /> },
+  { path: "/", element: <LandingPage /> },
+  { path: "/login", element: <Login /> },
   {
     path: "/home",
     element: <ProtectedRoute />,
