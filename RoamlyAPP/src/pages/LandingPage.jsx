@@ -27,9 +27,11 @@ export default function LandingPage() {
     <div className="container">
       <LoginBanner />
       <div className="landingpage">
-        <h1>Popular Destinations</h1>
-        <h5>Discover trending destinations loved by many</h5>
-        <button>Explore destinations</button>
+        <div className="landingpage-destiantions">
+          <h1>Popular Destinations</h1>
+          <h4>Discover trending destinations loved by many</h4>
+          <button className="button">Explore destinations</button>
+        </div>
         <div className="destination-cards">
           {destinations.map((destination) => (
             <DestinationCard

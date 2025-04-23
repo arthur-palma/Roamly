@@ -4,8 +4,9 @@
   align-items: center;
   box-sizing: border-box;
   background-color: white;
-  border-radius: 12px;
+  border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.315);
   overflow: hidden;
   margin: 1em;
   transition: transform 0.2s ease;
@@ -37,7 +38,7 @@
   padding: 0.4em 0.8em;
   border-radius: 8px;
   font-weight: bold;
-  color: #333;
+  color: #424242;
   font-size: 0.9em;
 }
 

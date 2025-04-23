@@ -147,9 +147,13 @@ export default function SignIn() {
   };
 
   return (
-    <>
+    <div className="container">
       <CssBaseline enableColorScheme />
-      <SignInContainer direction="column" justifyContent="space-between">
+      <SignInContainer
+        direction="column"
+        justifyContent="space-between"
+        width={"100%"}
+      >
         <Card variant="outlined">
           <Typography
             component="h1"
@@ -257,6 +261,6 @@ export default function SignIn() {
           </Box>
         </Card>
       </SignInContainer>
-    </>
+    </div>
   );
 }

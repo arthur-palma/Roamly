@@ -57,7 +57,11 @@ button:focus-visible {
 
 .container > * {
   box-sizing: border-box;
-  padding: 3em 5em;
+  padding: 3em 10em;
+}
+
+.container > *:first-child {
+  width: 100%;
 }
 
 @media screen and (max-width: 800px) {
