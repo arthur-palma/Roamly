@@ -2,6 +2,7 @@ import axios from "axios";
 import LoginBanner from "../components/LoginBanner.jsx";
 import { useEffect, useState } from "react";
 import DestinationCard from "../components/DestinationCard";
+import NavBar from "../components/NavBar";
 import "./LandingPage.css";
 export default function LandingPage() {
   const [destinations, setDestinations] = useState([]);
@@ -25,6 +26,7 @@ export default function LandingPage() {
   }, []);
   return (
     <div className="container">
+      <NavBar />
       <LoginBanner />
       <div className="landingpage">
         <div className="landingpage-destiantions">

@@ -1,0 +1,52 @@
+.navbar {
+  background-color: white;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+  flex-direction: row;
+  color: black;
+  position: relative;
+  font-size: 10px;
+}
+
+.navbar-logo-image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: rgb(109, 109, 109);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  object-fit: cover;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  color: black;
+  gap: 1.5em;
+}
+
+.navbar-logo h1 {
+  margin: 0px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: black;
+  margin: 0 10px;
+  font-size: 16px;
+}
+
+.navbar a:hover {
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
